@@ -4,20 +4,15 @@
   "description": "Find and fix invalid frame names in Figma",
   "private": true,
   "scripts": {
-    "build": "pnpm run build:plugin && pnpm run build:ui && pnpm run build:message-types",
-    "build:plugin": "pnpm --filter @frame-lint/plugin build",
-    "build:ui": "pnpm --filter @frame-lint/ui build",
-    "build:message-types": "pnpm --filter @frame-lint/message-types build",
-    "dev": "pnpm run dev:plugin & pnpm run dev:ui & pnpm run dev:message-types",
-    "dev:plugin": "pnpm --filter @frame-lint/plugin dev",
-    "dev:ui": "pnpm --filter @frame-lint/ui dev",
-    "dev:message-types": "pnpm --filter @frame-lint/message-types dev",
+    "build": "turbo run build",
+    "dev": "turbo run dev",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "lint": "eslint .",
-    "lint:fix": "eslint --fix ."
+    "lint": "turbo run lint",
+    "type-check": "turbo run type-check"
   },
   "author": "nukotsuka",
+  "license": "MIT",
   "devDependencies": {
     "@eslint/js": "^9.33.0",
     "@figma/plugin-typings": "*",
@@ -29,6 +24,7 @@
     "eslint-plugin-unused-imports": "^4.1.4",
     "jiti": "^2.5.1",
     "prettier": "^3.6.2",
+    "turbo": "^2.5.6",
     "typescript": "^5.9.2",
     "typescript-eslint": "^8.39.1"
   },

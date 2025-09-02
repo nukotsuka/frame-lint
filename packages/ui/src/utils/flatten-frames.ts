@@ -1,9 +1,6 @@
 import { FrameInfo } from "@frame-lint/message-types";
 
-export const flattenFrames = (
-  frames: FrameInfo[],
-  level = 0,
-): (FrameInfo & { level: number })[] => {
+export const flattenFrames = (frames: FrameInfo[], level = 0): (FrameInfo & { level: number })[] => {
   const result: (FrameInfo & { level: number })[] = [];
 
   for (const frame of frames) {

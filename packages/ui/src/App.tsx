@@ -1,28 +1,12 @@
 "use client";
 
-import {
-  Box,
-  Button,
-  Heading,
-  Text,
-  VStack,
-  HStack,
-  Textarea,
-  Badge,
-  Separator,
-  List,
-} from "@chakra-ui/react";
+import { Box, Button, Heading, Text, VStack, HStack, Textarea, Badge, Separator, List } from "@chakra-ui/react";
 import { FrameInfo, PluginToUiMessage } from "@frame-lint/message-types";
 import equal from "fast-deep-equal";
 import { useState, useEffect, useMemo, useCallback } from "react";
 import { match } from "ts-pattern";
 
-import {
-  EditButton,
-  EmptyView,
-  FocusNodeButton,
-  FrameIcon,
-} from "./components/frame-lint";
+import { EditButton, EmptyView, FocusNodeButton, FrameIcon } from "./components/frame-lint";
 import { ColorModeButton, showToast, useColorMode } from "./components/ui";
 import { flattenFrames } from "./utils/flatten-frames";
 import { postMessage } from "./utils/post-message";
@@ -35,14 +19,9 @@ function App() {
   const [patternInput, setPatternInput] = useState<string>("");
   const [allowedPatterns, setAllowedPatterns] = useState<string[]>([]);
   const [selectedFrameId, setSelectedFrameId] = useState<string | null>(null);
-  const [selectedFrameName, setSelectedFrameName] = useState<string | null>(
-    null,
-  );
+  const [selectedFrameName, setSelectedFrameName] = useState<string | null>(null);
 
-  const flatFrames = useMemo(
-    () => frameInfos && flattenFrames(frameInfos),
-    [frameInfos],
-  );
+  const flatFrames = useMemo(() => frameInfos && flattenFrames(frameInfos), [frameInfos]);
 
   const patterns = useMemo(
     () =>
@@ -120,18 +99,12 @@ function App() {
         <VStack align="stretch" gap="2">
           <HStack justify="space-between">
             <Text fontWeight="medium">Allowed Naming Patterns:</Text>
-            <Button
-              colorPalette="cyan"
-              disabled={isUpdatePatternsDisabled}
-              onClick={handleUpdatePatterns}
-              size="sm"
-            >
+            <Button colorPalette="cyan" disabled={isUpdatePatternsDisabled} onClick={handleUpdatePatterns} size="sm">
               Update Patterns
             </Button>
           </HStack>
           <Text color="fg.muted" fontSize="sm">
-            Enter patterns separated by "{PATTERNS_SEPARATOR}". Use * for
-            wildcards.
+            Enter patterns separated by "{PATTERNS_SEPARATOR}". Use * for wildcards.
           </Text>
           <Textarea
             onChange={(e) => setPatternInput(e.target.value)}
@@ -146,44 +119,25 @@ function App() {
         <VStack align="stretch" flex="1" gap="2" overflow="hidden">
           <HStack justify="space-between">
             <VStack align="start" gap="0">
-              <Text fontWeight="medium">
-                Invalid Frames ({flatFrames ? flatFrames.length : "-"})
-              </Text>
+              <Text fontWeight="medium">Invalid Frames ({flatFrames ? flatFrames.length : "-"})</Text>
               <Text color="fg.muted" fontSize="sm" lineClamp={1}>
-                {selectedFrameName
-                  ? `Selected: ${selectedFrameName}`
-                  : "Select a frame to lint or run lint all frames"}
+                {selectedFrameName ? `Selected: ${selectedFrameName}` : "Select a frame to lint or run lint all frames"}
               </Text>
             </VStack>
             <Button colorPalette="cyan" onClick={handleRunLint} size="sm">
               {selectedFrameId ? "Lint Selected" : "Lint All"}
             </Button>
           </HStack>
-          <Box
-            flex="1"
-            overflowY="auto"
-            padding="2"
-            borderWidth="1px"
-            borderRadius="md"
-          >
+          <Box flex="1" overflowY="auto" padding="2" borderWidth="1px" borderRadius="md">
             {flatFrames === null || flatFrames.length === 0 ? (
               <EmptyView hasResults={flatFrames !== null} />
             ) : (
               <List.Root as="ul" gap="1">
                 {flatFrames.map((frame) => (
-                  <List.Item
-                    key={frame.id}
-                    as="li"
-                    width="100%"
-                    paddingLeft={`${frame.level * 20}px`}
-                    paddingY="1"
-                  >
+                  <List.Item key={frame.id} as="li" width="100%" paddingLeft={`${frame.level * 20}px`} paddingY="1">
                     <HStack justify="space-between" gap="2">
                       <HStack flex="1" gap="2">
-                        <FrameIcon
-                          layoutMode={frame.layoutMode}
-                          type={frame.type}
-                        />
+                        <FrameIcon layoutMode={frame.layoutMode} type={frame.type} />
                         <Text fontSize="sm" lineClamp={1}>
                           {frame.name}
                         </Text>

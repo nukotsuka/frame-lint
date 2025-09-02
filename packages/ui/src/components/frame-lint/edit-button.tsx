@@ -12,11 +12,7 @@ type EditButtonProps = {
   setFrameInfos: React.Dispatch<React.SetStateAction<FrameInfo[] | null>>;
 };
 
-export const EditButton = ({
-  frameId,
-  allowedPatterns,
-  setFrameInfos,
-}: EditButtonProps) => {
+export const EditButton = ({ frameId, allowedPatterns, setFrameInfos }: EditButtonProps) => {
   const handleUpdateFrameName = useCallback(
     (name: string) => {
       const updateFrameRecursive = (frames: FrameInfo[]): FrameInfo[] => {
@@ -85,11 +81,7 @@ export const EditButton = ({
             <Menu.ItemGroup>
               <Menu.ItemGroupLabel>Update Name to...</Menu.ItemGroupLabel>
               {allowedPatterns.map((pattern) => (
-                <Menu.Item
-                  key={pattern}
-                  onClick={() => handleUpdateFrameName(pattern)}
-                  value={pattern}
-                >
+                <Menu.Item key={pattern} onClick={() => handleUpdateFrameName(pattern)} value={pattern}>
                   {pattern}
                 </Menu.Item>
               ))}

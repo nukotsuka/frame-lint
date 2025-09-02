@@ -16,11 +16,7 @@ export const FocusNodeButton = ({ nodeId }: FocusNodeButtonProps) => {
 
   return (
     <Tooltip content="Focus">
-      <IconButton
-        onClick={() => handleFocusNode(nodeId)}
-        size="sm"
-        variant="ghost"
-      >
+      <IconButton onClick={() => handleFocusNode(nodeId)} size="sm" variant="ghost">
         <LuFocus />
       </IconButton>
     </Tooltip>

@@ -2,10 +2,7 @@ import { postMessage } from "./post-message";
 
 export const frameSelected = (): void => {
   const selection = figma.currentPage.selection;
-  if (
-    selection.length === 1 &&
-    (selection[0].type === "FRAME" || selection[0].type === "COMPONENT")
-  ) {
+  if (selection.length === 1 && (selection[0].type === "FRAME" || selection[0].type === "COMPONENT")) {
     postMessage({
       type: "frame-selected",
       frameId: selection[0].id,

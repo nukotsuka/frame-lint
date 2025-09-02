@@ -3,22 +3,14 @@ import { FrameInfo } from "@frame-lint/message-types";
 import { loadAllowedPatterns } from "./allowed-pattern";
 import { postMessage } from "./post-message";
 
-const getAllFrames = (
-  node: BaseNode,
-  includeRoot = true,
-): (FrameNode | ComponentNode)[] => {
+const getAllFrames = (node: BaseNode, includeRoot = true): (FrameNode | ComponentNode)[] => {
   const frames: (FrameNode | ComponentNode)[] = [];
 
   if ((node.type === "FRAME" || node.type === "COMPONENT") && includeRoot) {
     frames.push(node as FrameNode | ComponentNode);
   }
 
-  if (
-    node.type === "FRAME" ||
-    node.type === "COMPONENT" ||
-    node.type === "PAGE" ||
-    node.type === "SECTION"
-  ) {
+  if (node.type === "FRAME" || node.type === "COMPONENT" || node.type === "PAGE" || node.type === "SECTION") {
     if ("children" in node) {
       for (const child of node.children) {
         frames.push(...getAllFrames(child));
@@ -37,10 +29,7 @@ const checkFrameName = (name: string, patterns: string[]): boolean => {
   });
 };
 
-const buildFrameHierarchy = (
-  frames: (FrameNode | ComponentNode)[],
-  patterns: string[],
-): FrameInfo[] => {
+const buildFrameHierarchy = (frames: (FrameNode | ComponentNode)[], patterns: string[]): FrameInfo[] => {
   const frameInfos: FrameInfo[] = [];
   const processedIds = new Set<string>();
 
@@ -51,9 +40,7 @@ const buildFrameHierarchy = (
     processedIds.add(frame.id);
 
     const isValid =
-      frame.parent?.type === "PAGE" ||
-      frame.parent?.type === "SECTION" ||
-      checkFrameName(frame.name, patterns);
+      frame.parent?.type === "PAGE" || frame.parent?.type === "SECTION" || checkFrameName(frame.name, patterns);
 
     const childFrames: FrameInfo[] = [];
     if ("children" in frame) {
@@ -96,20 +83,14 @@ export const lintFrames = async (selectedFrameId?: string): Promise<void> => {
 
   if (selectedFrameId) {
     const selectedNode = await figma.getNodeByIdAsync(selectedFrameId);
-    if (
-      selectedNode &&
-      (selectedNode.type === "FRAME" || selectedNode.type === "COMPONENT")
-    ) {
+    if (selectedNode && (selectedNode.type === "FRAME" || selectedNode.type === "COMPONENT")) {
       allFrames = getAllFrames(selectedNode);
     } else {
       allFrames = getAllFrames(figma.currentPage);
     }
   } else {
     const selection = figma.currentPage.selection;
-    if (
-      selection.length === 1 &&
-      (selection[0].type === "FRAME" || selection[0].type === "COMPONENT")
-    ) {
+    if (selection.length === 1 && (selection[0].type === "FRAME" || selection[0].type === "COMPONENT")) {
       allFrames = getAllFrames(selection[0]);
     } else {
       allFrames = getAllFrames(figma.currentPage);
