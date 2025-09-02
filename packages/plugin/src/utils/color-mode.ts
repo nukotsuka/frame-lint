@@ -4,7 +4,7 @@ const STORAGE_KEY = "colorMode";
 const DEFAULT_COLOR_MODE = "light";
 
 export const loadColorMode = async (
-  skipPostMessage?: boolean
+  skipPostMessage?: boolean,
 ): Promise<"light" | "dark"> => {
   let colorMode: "light" | "dark" = DEFAULT_COLOR_MODE;
   try {
@@ -31,7 +31,7 @@ export const loadColorMode = async (
 };
 
 export const saveColorMode = async (
-  colorMode: "light" | "dark"
+  colorMode: "light" | "dark",
 ): Promise<void> => {
   try {
     await figma.clientStorage.setAsync(STORAGE_KEY, colorMode);

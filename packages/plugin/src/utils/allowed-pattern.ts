@@ -4,7 +4,7 @@ const STORAGE_KEY = "allowedPatterns";
 const DEFAULT_PATTERNS = ["Component", "Frame", "Section", "Group"];
 
 export const loadAllowedPatterns = async (
-  skipPostMessage?: boolean
+  skipPostMessage?: boolean,
 ): Promise<string[]> => {
   let allowedPatterns: string[] = [];
   try {
@@ -31,7 +31,7 @@ export const loadAllowedPatterns = async (
 };
 
 export const saveAllowedPatterns = async (
-  patterns: string[]
+  patterns: string[],
 ): Promise<void> => {
   try {
     await figma.clientStorage.setAsync(STORAGE_KEY, patterns);

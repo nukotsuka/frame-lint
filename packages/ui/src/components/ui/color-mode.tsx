@@ -58,7 +58,7 @@ export const ColorModeButton = React.forwardRef<
       toggleColorMode();
       onClick?.(e);
     },
-    [toggleColorMode, onClick]
+    [toggleColorMode, onClick],
   );
 
   return (
@@ -98,7 +98,7 @@ export const LightMode = React.forwardRef<HTMLSpanElement, SpanProps>(
         {...props}
       />
     );
-  }
+  },
 );
 
 export const DarkMode = React.forwardRef<HTMLSpanElement, SpanProps>(
@@ -114,5 +114,5 @@ export const DarkMode = React.forwardRef<HTMLSpanElement, SpanProps>(
         {...props}
       />
     );
-  }
+  },
 );

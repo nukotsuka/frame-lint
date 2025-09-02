@@ -1,15 +1,15 @@
-import { defineConfig } from 'tsup'
+import { defineConfig } from "tsup";
 
 export default defineConfig({
-  entry: ['src/index.ts'],
-  format: ['iife'],
-  outDir: 'dist',
+  entry: ["src/index.ts"],
+  format: ["iife"],
+  outDir: "dist",
   minify: false,
   clean: true,
   noExternal: [/.*/],
   outExtension() {
     return {
-      js: '.js',
-    }
+      js: ".js",
+    };
   },
-})
+});

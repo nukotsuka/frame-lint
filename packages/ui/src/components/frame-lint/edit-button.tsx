@@ -37,7 +37,7 @@ export const EditButton = ({
 
       postMessage({ type: "update-frame-name", frameId, name });
     },
-    [frameId, setFrameInfos]
+    [frameId, setFrameInfos],
   );
 
   const handleUngroupFrame = useCallback(() => {

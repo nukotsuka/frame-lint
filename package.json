@@ -12,6 +12,8 @@
     "dev:plugin": "pnpm --filter @frame-lint/plugin dev",
     "dev:ui": "pnpm --filter @frame-lint/ui dev",
     "dev:message-types": "pnpm --filter @frame-lint/message-types dev",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "lint": "eslint .",
     "lint:fix": "eslint --fix ."
   },
@@ -26,6 +28,7 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-unused-imports": "^4.1.4",
     "jiti": "^2.5.1",
+    "prettier": "^3.6.2",
     "typescript": "^5.9.2",
     "typescript-eslint": "^8.39.1"
   },

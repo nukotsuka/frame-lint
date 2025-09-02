@@ -5,7 +5,7 @@ import { postMessage } from "./post-message";
 
 const getAllFrames = (
   node: BaseNode,
-  includeRoot = true
+  includeRoot = true,
 ): (FrameNode | ComponentNode)[] => {
   const frames: (FrameNode | ComponentNode)[] = [];
 
@@ -39,7 +39,7 @@ const checkFrameName = (name: string, patterns: string[]): boolean => {
 
 const buildFrameHierarchy = (
   frames: (FrameNode | ComponentNode)[],
-  patterns: string[]
+  patterns: string[],
 ): FrameInfo[] => {
   const frameInfos: FrameInfo[] = [];
   const processedIds = new Set<string>();

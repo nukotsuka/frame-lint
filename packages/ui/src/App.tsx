@@ -36,12 +36,12 @@ function App() {
   const [allowedPatterns, setAllowedPatterns] = useState<string[]>([]);
   const [selectedFrameId, setSelectedFrameId] = useState<string | null>(null);
   const [selectedFrameName, setSelectedFrameName] = useState<string | null>(
-    null
+    null,
   );
 
   const flatFrames = useMemo(
     () => frameInfos && flattenFrames(frameInfos),
-    [frameInfos]
+    [frameInfos],
   );
 
   const patterns = useMemo(
@@ -50,7 +50,7 @@ function App() {
         .split(PATTERNS_SEPARATOR)
         .map((p) => p.trim())
         .filter((p) => p.length > 0),
-    [patternInput]
+    [patternInput],
   );
 
   const isUpdatePatternsDisabled = useMemo(() => {
@@ -99,7 +99,7 @@ function App() {
         })
         .exhaustive();
     },
-    [setColorMode]
+    [setColorMode],
   );
 
   useEffect(() => {

@@ -17,7 +17,7 @@ export const FrameIcon = ({
         .with("VERTICAL", () => <GoRows />)
         .with("GRID", () => <RxDashboard />)
         .with("NONE", () => <RxFrame />)
-        .exhaustive()
+        .exhaustive(),
     )
     .with("COMPONENT", () => <RxComponent1 />)
     .exhaustive();
