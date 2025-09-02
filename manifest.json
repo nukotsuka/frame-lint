@@ -1,0 +1,14 @@
+{
+  "name": "Frame Lint",
+  "id": "1538400986999207352",
+  "api": "1.0.0",
+  "main": "packages/plugin/dist/index.js",
+  "capabilities": [],
+  "enableProposedApi": false,
+  "documentAccess": "dynamic-page",
+  "editorType": ["figma"],
+  "ui": "packages/ui/dist/index.html",
+  "networkAccess": {
+    "allowedDomains": ["none"]
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "@frame-lint/message-types",
+  "version": "1.0.0",
+  "description": "Shared message types for Frame Lint",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch"
+  },
+  "devDependencies": {
+    "@figma/plugin-typings": "*",
+    "tsup": "^8.0.1",
+    "typescript": "^5.3.2"
+  }
+}

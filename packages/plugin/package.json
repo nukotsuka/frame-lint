@@ -1,0 +1,19 @@
+{
+  "name": "@frame-lint/plugin",
+  "version": "1.0.0",
+  "description": "Frame Lint Figma Plugin",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch"
+  },
+  "dependencies": {
+    "@frame-lint/message-types": "workspace:*",
+    "ts-pattern": "catalog:"
+  },
+  "devDependencies": {
+    "@figma/plugin-typings": "*",
+    "tsup": "^8.0.1",
+    "typescript": "^5.3.2"
+  }
+}
