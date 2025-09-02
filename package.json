@@ -18,6 +18,7 @@
     "lint:fix": "eslint --fix ."
   },
   "author": "nukotsuka",
+  "license": "MIT",
   "devDependencies": {
     "@eslint/js": "^9.33.0",
     "@figma/plugin-typings": "*",
