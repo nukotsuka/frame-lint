@@ -3,9 +3,7 @@ import { postMessage } from "./post-message";
 const STORAGE_KEY = "allowedPatterns";
 const DEFAULT_PATTERNS = ["Component", "Frame", "Section", "Group"];
 
-export const loadAllowedPatterns = async (
-  skipPostMessage?: boolean,
-): Promise<string[]> => {
+export const loadAllowedPatterns = async (skipPostMessage?: boolean): Promise<string[]> => {
   let allowedPatterns: string[] = [];
   try {
     const stored = await figma.clientStorage.getAsync(STORAGE_KEY);
@@ -30,9 +28,7 @@ export const loadAllowedPatterns = async (
   return allowedPatterns;
 };
 
-export const saveAllowedPatterns = async (
-  patterns: string[],
-): Promise<void> => {
+export const saveAllowedPatterns = async (patterns: string[]): Promise<void> => {
   try {
     await figma.clientStorage.setAsync(STORAGE_KEY, patterns);
   } catch (error) {

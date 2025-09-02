@@ -3,13 +3,7 @@ import { GoColumns, GoRows } from "react-icons/go";
 import { RxComponent1, RxDashboard, RxFrame } from "react-icons/rx";
 import { match } from "ts-pattern";
 
-export const FrameIcon = ({
-  type,
-  layoutMode,
-}: {
-  type: FrameInfo["type"];
-  layoutMode: FrameInfo["layoutMode"];
-}) => {
+export const FrameIcon = ({ type, layoutMode }: { type: FrameInfo["type"]; layoutMode: FrameInfo["layoutMode"] }) => {
   return match(type)
     .with("FRAME", () =>
       match(layoutMode)

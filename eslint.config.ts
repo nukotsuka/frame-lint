@@ -30,14 +30,7 @@ export default [
       "import/order": [
         "error",
         {
-          groups: [
-            "builtin",
-            "external",
-            "internal",
-            "sibling",
-            "index",
-            "object",
-          ],
+          groups: ["builtin", "external", "internal", "sibling", "index", "object"],
           alphabetize: {
             order: "asc",
           },

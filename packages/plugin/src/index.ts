@@ -1,10 +1,7 @@
 import { UiToPluginMessage } from "@frame-lint/message-types";
 import { match } from "ts-pattern";
 
-import {
-  loadAllowedPatterns,
-  saveAllowedPatterns,
-} from "./utils/allowed-pattern";
+import { loadAllowedPatterns, saveAllowedPatterns } from "./utils/allowed-pattern";
 import { loadColorMode, saveColorMode } from "./utils/color-mode";
 import { frameSelected } from "./utils/frame-selected";
 import { lintFrames } from "./utils/lint-frames";

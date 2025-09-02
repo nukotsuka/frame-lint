@@ -9,17 +9,11 @@ export const EmptyView = ({ hasResults }: EmptyViewProps) => {
   return (
     <EmptyState.Root>
       <EmptyState.Content>
-        <EmptyState.Indicator>
-          {hasResults ? <LuCircleCheck /> : <LuSquareDashed />}
-        </EmptyState.Indicator>
+        <EmptyState.Indicator>{hasResults ? <LuCircleCheck /> : <LuSquareDashed />}</EmptyState.Indicator>
         <VStack textAlign="center">
-          <EmptyState.Title>
-            {hasResults ? "No invalid frames found" : "No results yet"}
-          </EmptyState.Title>
+          <EmptyState.Title>{hasResults ? "No invalid frames found" : "No results yet"}</EmptyState.Title>
           <EmptyState.Description>
-            {hasResults
-              ? "All frame names are valid"
-              : "Please run the lint to see the results"}
+            {hasResults ? "All frame names are valid" : "Please run the lint to see the results"}
           </EmptyState.Description>
         </VStack>
       </EmptyState.Content>
