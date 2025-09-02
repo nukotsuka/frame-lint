@@ -1,4 +1,4 @@
-name: build-lint-format-type-check
+name: ci
 
 on:
   push:
@@ -7,8 +7,12 @@ on:
   pull_request:
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}-ci
+  cancel-in-progress: true
+
 jobs:
-  test:
+  build-lint-format-type-check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
