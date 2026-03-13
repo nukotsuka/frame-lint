@@ -3,16 +3,10 @@ import { FrameInfo } from "@frame-lint/message-types";
 import { loadAllowedPatterns } from "./allowed-pattern";
 import { postMessage } from "./post-message";
 
-const getAllFrames = (
-  node: BaseNode,
-  includeRoot = true
-): (FrameNode | ComponentNode | InstanceNode)[] => {
+const getAllFrames = (node: BaseNode, includeRoot = true): (FrameNode | ComponentNode | InstanceNode)[] => {
   const frames: (FrameNode | ComponentNode | InstanceNode)[] = [];
 
-  if (
-    (node.type === "FRAME" || node.type === "COMPONENT" || node.type === "INSTANCE") &&
-    includeRoot
-  ) {
+  if ((node.type === "FRAME" || node.type === "COMPONENT" || node.type === "INSTANCE") && includeRoot) {
     frames.push(node as FrameNode | ComponentNode | InstanceNode);
   }
 
@@ -41,16 +35,11 @@ const checkFrameName = (name: string, patterns: string[]): boolean => {
   });
 };
 
-const buildFrameHierarchy = (
-  frames: (FrameNode | ComponentNode | InstanceNode)[],
-  patterns: string[]
-): FrameInfo[] => {
+const buildFrameHierarchy = (frames: (FrameNode | ComponentNode | InstanceNode)[], patterns: string[]): FrameInfo[] => {
   const frameInfos: FrameInfo[] = [];
   const processedIds = new Set<string>();
 
-  const processFrame = (
-    frame: FrameNode | ComponentNode | InstanceNode
-  ): FrameInfo | null => {
+  const processFrame = (frame: FrameNode | ComponentNode | InstanceNode): FrameInfo | null => {
     if (processedIds.has(frame.id)) {
       return null;
     }
@@ -67,21 +56,13 @@ const buildFrameHierarchy = (
     }
 
     const isValid =
-      frame.parent?.type === "PAGE" ||
-      frame.parent?.type === "SECTION" ||
-      checkFrameName(frame.name, patterns);
+      frame.parent?.type === "PAGE" || frame.parent?.type === "SECTION" || checkFrameName(frame.name, patterns);
 
     const childFrames: FrameInfo[] = [];
     if ("children" in frame) {
       for (const child of frame.children) {
-        if (
-          child.type === "FRAME" ||
-          child.type === "COMPONENT" ||
-          child.type === "INSTANCE"
-        ) {
-          const childInfo = processFrame(
-            child as FrameNode | ComponentNode | InstanceNode
-          );
+        if (child.type === "FRAME" || child.type === "COMPONENT" || child.type === "INSTANCE") {
+          const childInfo = processFrame(child as FrameNode | ComponentNode | InstanceNode);
           if (childInfo) {
             childFrames.push(childInfo);
           }

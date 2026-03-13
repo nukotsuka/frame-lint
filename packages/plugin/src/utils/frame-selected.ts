@@ -4,9 +4,7 @@ export const frameSelected = (): void => {
   const selection = figma.currentPage.selection;
   if (
     selection.length === 1 &&
-    (selection[0].type === "FRAME" ||
-      selection[0].type === "COMPONENT" ||
-      selection[0].type === "COMPONENT_SET")
+    (selection[0].type === "FRAME" || selection[0].type === "COMPONENT" || selection[0].type === "COMPONENT_SET")
   ) {
     postMessage({
       type: "frame-selected",
