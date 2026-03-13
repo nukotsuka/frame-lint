@@ -1,7 +1,7 @@
 export type FrameInfo = {
   id: string;
   name: string;
-  type: "FRAME" | "COMPONENT";
+  type: "FRAME" | "COMPONENT" | "INSTANCE";
   layoutMode: "NONE" | "HORIZONTAL" | "VERTICAL" | "GRID";
   isValid: boolean;
   children?: FrameInfo[];
