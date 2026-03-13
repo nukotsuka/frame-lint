@@ -1,6 +1,6 @@
 import { FrameInfo } from "@frame-lint/message-types";
 import { GoColumns, GoRows } from "react-icons/go";
-import { RxComponent1, RxDashboard, RxFrame } from "react-icons/rx";
+import { RxComponent1, RxComponentInstance, RxDashboard, RxFrame } from "react-icons/rx";
 import { match } from "ts-pattern";
 
 export const FrameIcon = ({ type, layoutMode }: { type: FrameInfo["type"]; layoutMode: FrameInfo["layoutMode"] }) => {
@@ -14,5 +14,6 @@ export const FrameIcon = ({ type, layoutMode }: { type: FrameInfo["type"]; layou
         .exhaustive(),
     )
     .with("COMPONENT", () => <RxComponent1 />)
+    .with("INSTANCE", () => <RxComponentInstance />)
     .exhaustive();
 };
