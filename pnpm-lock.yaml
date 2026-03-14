@@ -6,6 +6,9 @@ settings:
 
 catalogs:
   default:
+    '@figma/plugin-typings':
+      specifier: 1.123.0
+      version: 1.123.0
     fast-deep-equal:
       specifier: 3.1.3
       version: 3.1.3
@@ -21,8 +24,8 @@ importers:
         specifier: ^9.33.0
         version: 9.33.0
       '@figma/plugin-typings':
-        specifier: '*'
-        version: 1.117.0
+        specifier: 'catalog:'
+        version: 1.123.0
       eslint:
         specifier: ^9.33.0
         version: 9.33.0(jiti@2.5.1)
@@ -60,8 +63,8 @@ importers:
   packages/message-types:
     devDependencies:
       '@figma/plugin-typings':
-        specifier: '*'
-        version: 1.117.0
+        specifier: 'catalog:'
+        version: 1.123.0
       tsup:
         specifier: ^8.0.1
         version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(typescript@5.9.2)
@@ -79,8 +82,8 @@ importers:
         version: 5.8.0
     devDependencies:
       '@figma/plugin-typings':
-        specifier: '*'
-        version: 1.117.0
+        specifier: 'catalog:'
+        version: 1.123.0
       tsup:
         specifier: ^8.0.1
         version: 8.5.0(jiti@2.5.1)(postcss@8.5.6)(typescript@5.9.2)
@@ -1062,8 +1065,8 @@ packages:
     resolution: {integrity: sha512-Z5kJ+wU3oA7MMIqVR9tyZRtjYPr4OC004Q4Rw7pgOKUOKkJfZ3O24nz3WYfGRpMDNmcOi3TwQOmgm7B7Tpii0w==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@figma/plugin-typings@1.117.0':
-    resolution: {integrity: sha512-EDirBOeOcS90SQ5SwrJyTiL6iJxG/81U9nzJJkBqdWRHGMfFWAOydbAlcRylgETKwIKRlflL92nNSt+WmnweKA==}
+  '@figma/plugin-typings@1.123.0':
+    resolution: {integrity: sha512-NLv2aQ8R9dP5psDplWpq+pJxRUGsJ1YEYYbBV2oTd03kS+aau7N9XWLjw52s1uVgi8jQ33N001EX3f7vSCztjQ==}
 
   '@floating-ui/core@1.7.3':
     resolution: {integrity: sha512-sGnvb5dmrJaKEZ+LDIpguvdX3bDlEllmv4/ClQ9awcmCZrlx5jQyyMWFM5kBI+EyNOCDDiKk8il0zeuX3Zlg/w==}
@@ -4109,7 +4112,7 @@ snapshots:
       '@eslint/core': 0.15.2
       levn: 0.4.1
 
-  '@figma/plugin-typings@1.117.0': {}
+  '@figma/plugin-typings@1.123.0': {}
 
   '@floating-ui/core@1.7.3':
     dependencies:

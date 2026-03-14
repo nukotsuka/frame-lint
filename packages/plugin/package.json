@@ -14,7 +14,7 @@
     "ts-pattern": "catalog:"
   },
   "devDependencies": {
-    "@figma/plugin-typings": "*",
+    "@figma/plugin-typings": "catalog:",
     "tsup": "^8.0.1",
     "typescript": "^5.3.2"
   }
