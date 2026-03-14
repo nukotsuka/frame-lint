@@ -5,9 +5,7 @@ import { postMessage } from "./post-message";
 
 const instanceHasSlotProperty = (node: InstanceNode): boolean => {
   const props = node.componentProperties;
-  return (Object.keys(props) as (keyof typeof props)[]).some(
-    (key) => (props[key].type as string) === "SLOT"
-  );
+  return (Object.keys(props) as (keyof typeof props)[]).some((key) => (props[key].type as string) === "SLOT");
 };
 
 const hasSlotDescendant = (node: BaseNode): boolean => {
@@ -30,7 +28,10 @@ const getAllFrames = (
   const frames: (FrameNode | ComponentNode | ComponentSetNode | InstanceNode)[] = [];
 
   if (includeRoot) {
-    if (!insideInstanceNotSlot && (node.type === "FRAME" || node.type === "COMPONENT" || node.type === "COMPONENT_SET")) {
+    if (
+      !insideInstanceNotSlot &&
+      (node.type === "FRAME" || node.type === "COMPONENT" || node.type === "COMPONENT_SET")
+    ) {
       frames.push(node as FrameNode | ComponentNode | ComponentSetNode);
     } else if (node.type === "INSTANCE" && hasSlotDescendant(node)) {
       frames.push(node as InstanceNode);
@@ -81,7 +82,10 @@ const checkFrameName = (name: string, patterns: string[]): boolean => {
   });
 };
 
-const buildFrameHierarchy = (frames: (FrameNode | ComponentNode | ComponentSetNode | InstanceNode)[], patterns: string[]): FrameInfo[] => {
+const buildFrameHierarchy = (
+  frames: (FrameNode | ComponentNode | ComponentSetNode | InstanceNode)[],
+  patterns: string[],
+): FrameInfo[] => {
   const frameInfos: FrameInfo[] = [];
   const processedIds = new Set<string>();
 
@@ -117,11 +121,7 @@ const buildFrameHierarchy = (frames: (FrameNode | ComponentNode | ComponentSetNo
         if ((child.type as string) === "SLOT" && "children" in child) {
           const slotChildren: FrameInfo[] = [];
           for (const slotChild of (child as { children: readonly SceneNode[] }).children) {
-            if (
-              slotChild.type === "FRAME" ||
-              slotChild.type === "COMPONENT" ||
-              slotChild.type === "INSTANCE"
-            ) {
+            if (slotChild.type === "FRAME" || slotChild.type === "COMPONENT" || slotChild.type === "INSTANCE") {
               const childInfo = processFrame(slotChild as FrameNode | ComponentNode | InstanceNode);
               if (childInfo) {
                 slotChildren.push(childInfo);
@@ -136,7 +136,12 @@ const buildFrameHierarchy = (frames: (FrameNode | ComponentNode | ComponentSetNo
             isValid: true,
             children: slotChildren.length > 0 ? slotChildren : undefined,
           });
-        } else if (child.type === "FRAME" || child.type === "COMPONENT" || child.type === "COMPONENT_SET" || child.type === "INSTANCE") {
+        } else if (
+          child.type === "FRAME" ||
+          child.type === "COMPONENT" ||
+          child.type === "COMPONENT_SET" ||
+          child.type === "INSTANCE"
+        ) {
           // INSTANCE の子要素は SLOT 子孫を持つものだけ処理（SLOT の兄弟であるが SLOT でない要素を除外）
           // FRAME/COMPONENT/COMPONENT_SET の子要素はすべて処理
           if (frame.type !== "INSTANCE" || hasSlotDescendant(child)) {
