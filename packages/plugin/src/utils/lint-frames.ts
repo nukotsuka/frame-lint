@@ -8,20 +8,38 @@ const instanceHasSlotProperty = (node: InstanceNode): boolean => {
   return (Object.keys(props) as (keyof typeof props)[]).some((key) => (props[key].type as string) === "SLOT");
 };
 
-const hasSlotDescendant = (node: BaseNode): boolean => {
-  if ((node.type as string) === "SLOT") return true;
-  if ("children" in node) {
-    for (const child of (node as { children: readonly SceneNode[] }).children) {
-      if (hasSlotDescendant(child)) return true;
+/**
+ * Map<node.id, boolean> でメモ化した hasSlotDescendant を返す。
+ * lintFrames 呼び出しごとに新しいキャッシュを生成することで、
+ * 同一トラバーサル内の重複探索を O(n) に抑える。
+ */
+const makeHasSlotDescendant = (): ((node: BaseNode) => boolean) => {
+  const cache = new Map<string, boolean>();
+  const hasSlotDescendant = (node: BaseNode): boolean => {
+    const hit = cache.get(node.id);
+    if (hit !== undefined) return hit;
+    let result = false;
+    if ((node.type as string) === "SLOT") {
+      result = true;
+    } else if ("children" in node) {
+      for (const child of (node as { children: readonly SceneNode[] }).children) {
+        if (hasSlotDescendant(child)) {
+          result = true;
+          break;
+        }
+      }
     }
-  }
-  return false;
+    cache.set(node.id, result);
+    return result;
+  };
+  return hasSlotDescendant;
 };
 
 // insideInstanceNotSlot: SLOT-containing INSTANCE の SLOT 以外の子孫をトラバース中かどうか。
 // true の場合、FRAME/COMPONENT はフレームリストに追加しない（SLOT と無関係な部分のため）。
 const getAllFrames = (
   node: BaseNode,
+  hasSlotDescendant: (node: BaseNode) => boolean,
   includeRoot = true,
   insideInstanceNotSlot = false,
 ): (FrameNode | ComponentNode | ComponentSetNode | InstanceNode)[] => {
@@ -47,14 +65,14 @@ const getAllFrames = (
   ) {
     if ("children" in node) {
       for (const child of node.children) {
-        frames.push(...getAllFrames(child, true, insideInstanceNotSlot));
+        frames.push(...getAllFrames(child, hasSlotDescendant, true, insideInstanceNotSlot));
       }
     }
   } else if ((node.type as string) === "SLOT") {
     // SLOT の中はすべて通常モード（insideInstanceNotSlot=false）
     if ("children" in node) {
       for (const child of (node as { children: readonly SceneNode[] }).children) {
-        frames.push(...getAllFrames(child, true, false));
+        frames.push(...getAllFrames(child, hasSlotDescendant, true, false));
       }
     }
   } else if (node.type === "INSTANCE" && hasSlotDescendant(node)) {
@@ -62,10 +80,10 @@ const getAllFrames = (
       for (const child of node.children) {
         if ((child.type as string) === "SLOT") {
           // SLOT の子要素は通常モードで探索
-          frames.push(...getAllFrames(child, true, false));
+          frames.push(...getAllFrames(child, hasSlotDescendant, true, false));
         } else {
           // SLOT 以外の子要素は FRAME/COMPONENT を追加しないモードで探索
-          frames.push(...getAllFrames(child, true, true));
+          frames.push(...getAllFrames(child, hasSlotDescendant, true, true));
         }
       }
     }
@@ -85,6 +103,7 @@ const checkFrameName = (name: string, patterns: string[]): boolean => {
 const buildFrameHierarchy = (
   frames: (FrameNode | ComponentNode | ComponentSetNode | InstanceNode)[],
   patterns: string[],
+  hasSlotDescendant: (node: BaseNode) => boolean,
 ): FrameInfo[] => {
   const frameInfos: FrameInfo[] = [];
   const processedIds = new Set<string>();
@@ -178,6 +197,10 @@ const buildFrameHierarchy = (
 };
 
 export const lintFrames = async (selectedFrameId?: string): Promise<void> => {
+  // lintFrames 呼び出しごとに新しいキャッシュを生成し、
+  // getAllFrames・buildFrameHierarchy で共有することで重複探索を防ぐ
+  const hasSlotDescendant = makeHasSlotDescendant();
+
   let allFrames: (FrameNode | ComponentNode | ComponentSetNode | InstanceNode)[];
 
   if (selectedFrameId) {
@@ -189,9 +212,9 @@ export const lintFrames = async (selectedFrameId?: string): Promise<void> => {
         selectedNode.type === "COMPONENT_SET" ||
         selectedNode.type === "INSTANCE")
     ) {
-      allFrames = getAllFrames(selectedNode);
+      allFrames = getAllFrames(selectedNode, hasSlotDescendant);
     } else {
-      allFrames = getAllFrames(figma.currentPage);
+      allFrames = getAllFrames(figma.currentPage, hasSlotDescendant);
     }
   } else {
     const selection = figma.currentPage.selection;
@@ -202,14 +225,14 @@ export const lintFrames = async (selectedFrameId?: string): Promise<void> => {
         selection[0].type === "COMPONENT_SET" ||
         selection[0].type === "INSTANCE")
     ) {
-      allFrames = getAllFrames(selection[0]);
+      allFrames = getAllFrames(selection[0], hasSlotDescendant);
     } else {
-      allFrames = getAllFrames(figma.currentPage);
+      allFrames = getAllFrames(figma.currentPage, hasSlotDescendant);
     }
   }
 
   const allowedPatterns = await loadAllowedPatterns(true);
-  const frameInfos = buildFrameHierarchy(allFrames, allowedPatterns);
+  const frameInfos = buildFrameHierarchy(allFrames, allowedPatterns, hasSlotDescendant);
 
   postMessage({
     type: "frame-lint-result",
